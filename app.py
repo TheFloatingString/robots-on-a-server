@@ -10,7 +10,8 @@ app = fastapi.FastAPI()
 
 
 def run_training(environment: str = None):
-    env = gym.make("HalfCheetah-v5", render_mode="rgb_array")
+    print(environment)
+    env = gym.make(environment, render_mode="rgb_array")
 
     model = PPO("MlpPolicy", env, verbose=1)
     model.learn(total_timesteps=1000)
@@ -46,7 +47,7 @@ async def root():
 @app.post("/api/dev/run")
 async def api_dev_run(item: Item):
     print(item.environment)
-    res = run_training()
+    res = run_training(item.environment)
     return res
 
 

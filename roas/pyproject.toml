@@ -1,0 +1,23 @@
+[project]
+name = "roas"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { email = "laurence.w.liang@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "halo>=0.0.31",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+    "rich>=13.9.4",
+    "typer>=0.15.1",
+]
+
+[project.scripts]
+roas = "roas:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
