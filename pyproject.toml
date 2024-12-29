@@ -1,0 +1,10 @@
+[project]
+name = "robots-on-a-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gymnasium[mujoco]>=1.0.0",
+    "stable-baselines3[extra]>=2.4.0",
+]
