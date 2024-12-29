@@ -20,5 +20,6 @@ uv run app.py
 ```bash
 cd roas
 uv pip install -e . -U
+set ROAS_URI=<BASE URL>
 roas
 ```
