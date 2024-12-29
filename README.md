@@ -9,8 +9,16 @@ pip install uv
 uv sync
 ```
 
-### Development Quickstart
+### Server Setup
 
 ```bash
-uv run quickstart
+uv run app.py
+```
+
+### Command Line Interface (CLI) Setup
+
+```bash
+cd roas
+uv pip install -e . -U
+roas
 ```
