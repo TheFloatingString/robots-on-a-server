@@ -8,3 +8,9 @@ Client-server interface for RL policy training for robot simulations
 pip install uv
 uv sync
 ```
+
+### Development Quickstart
+
+```bash
+uv run quickstart
+```
