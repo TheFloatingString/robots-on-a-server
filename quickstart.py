@@ -17,7 +17,7 @@ for i in tqdm.trange(1000):
     action, _state = model.predict(obs, deterministic=True)
     obs, reward, done, info = vec_env.step(action)
     reward_list.append(reward)
-    if i % 100 == 0:
-        vec_env.render("human")
+    # if i % 100 == 0:
+    #     vec_env.render("human")
 
 print(f"mean reward: {np.mean(reward_list)}")
