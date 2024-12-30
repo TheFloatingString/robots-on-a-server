@@ -19,8 +19,8 @@ def run_training(
         model = PPO("MlpPolicy", env, verbose=1)
     elif policy.upper() == "A2C":
         model = A2C("MlpPolicy", env, verbose=1)
-    # elif policy.upper() == "TRPO":
-    #     model = TRPO("MlpPolicy", env, verbose=1)
+    else:
+        raise NameError(f"Policy {policy} not yet implemented in roas.")
     model.learn(total_timesteps=n_training_epochs)
 
     vec_env = model.get_env()
