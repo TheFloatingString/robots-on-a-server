@@ -23,11 +23,18 @@ def main():
     if USER_ENV is None:
         USER_ENV = input("Name of robot environment: ")
 
+    POLICY = input("Name of RL policy: ")
+    N_TRAINING_EPOCHS = input("Number of training epochs: ")
+
     spinner = Halo(text="loading...", spinner="bouncingBar")
     spinner.start()
     resp = requests.post(
         BASE_URL + "/api/dev/run",
-        json={"environment": USER_ENV},
+        json={
+            "environment": USER_ENV,
+            "policy": POLICY,
+            "n_training_epochs": N_TRAINING_EPOCHS,
+        },
     )
     spinner.clear()
     print()
