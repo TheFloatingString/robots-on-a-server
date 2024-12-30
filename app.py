@@ -4,7 +4,7 @@ import numpy as np
 import tqdm
 import uvicorn
 from pydantic import BaseModel
-from stable_baselines3 import A2C, PPO
+from stable_baselines3 import PPO, A2C, TD3, SAC, DQN
 from wonderwords import RandomWord
 import random
 
@@ -34,6 +34,14 @@ def run_training(
 
     if policy.upper() == "PPO":
         model = PPO("MlpPolicy", env, verbose=1)
+    elif policy.upper() == "A2C":
+        model = A2C("MlpPolicy", env, verbose=1)
+    elif policy.upper() == "TD3":
+        model = TD3("MlpPolicy", env, verbose=1)
+    elif policy.upper() == "SAC":
+        model = SAC("MlpPolicy", env, verbose=1)
+    elif policy.upper() == "DQN":
+        model = DQN("MlpPolicy", env, verbose=1)
     elif policy.upper() == "A2C":
         model = A2C("MlpPolicy", env, verbose=1)
     else:

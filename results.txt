@@ -1,0 +1,24 @@
+"""
+TD3
+3.69 reward for 100,000 epochs and 22 minutes training
+-0.06 rewared for 10,000 epochs and 2:39 minutes training
+-0.57 reward for 1,000 epochs and 9 seconds training
+
+PPO
+0.0025 reward for 10,000 epochs and 11 seconds training
+0.13 reward for 20,000 epochs and 16 seconds training
+0.127 reward for 30,000 epochs and 17 seconds training
+-0.3076 reward for 40,000 epochs and 27 seconds training
+0.129 reward for 50,000 epochs and 36 seconds training
+-0.0198 reward for 60,000 epochs and 36 seconds training
+0.1872 reward for 70,000 epochs and 39 seconds training
+0.291 reward for 80,000 epochs and 1:05 minutes training
+0.050 reward for 90,000 epochs and 0:55 minutes training
+-0.0064 reward for 100,000 epochs and 1:01 minutes training
+1.47 reward for 1,000,000 epochs and 11:19 minutes training
+
+A2C
+-1.021 reward for 10000 epochs and 0:09 minutes training
+0.304 reward for 100,000 epochs and 1:40 minutes training
+-0.173 reward for 1,000,000 epochs and 13:17 minutes training
+"""
