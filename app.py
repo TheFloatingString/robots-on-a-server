@@ -4,17 +4,24 @@ import numpy as np
 import tqdm
 import uvicorn
 from pydantic import BaseModel
-from stable_baselines3 import PPO
+from stable_baselines3 import PPO, A2C
 
 app = fastapi.FastAPI()
 
 
-def run_training(environment: str = None):
+def run_training(
+    environment: str = None, policy: str = None, n_training_epochs: int = None
+) -> dict:
     print(environment)
     env = gym.make(environment, render_mode="rgb_array")
 
-    model = PPO("MlpPolicy", env, verbose=1)
-    model.learn(total_timesteps=1000)
+    if policy.upper() == "PPO":
+        model = PPO("MlpPolicy", env, verbose=1)
+    elif policy.upper() == "A2C":
+        model = A2C("MlpPolicy", env, verbose=1)
+    # elif policy.upper() == "TRPO":
+    #     model = TRPO("MlpPolicy", env, verbose=1)
+    model.learn(total_timesteps=n_training_epochs)
 
     vec_env = model.get_env()
     obs = vec_env.reset()
@@ -35,8 +42,8 @@ def run_training(environment: str = None):
 
 class Item(BaseModel):
     environment: str
-    # policy: str
-    # n_training_epochs: str
+    policy: str
+    n_training_epochs: str
 
 
 @app.get("/")
@@ -47,7 +54,11 @@ async def root():
 @app.post("/api/dev/run")
 async def api_dev_run(item: Item):
     print(item.environment)
-    res = run_training(item.environment)
+    res = run_training(
+        environment=item.environment,
+        policy=item.policy,
+        n_training_epochs=int(item.n_training_epochs),
+    )
     return res
 
 
