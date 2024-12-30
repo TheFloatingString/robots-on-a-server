@@ -5,15 +5,32 @@ import tqdm
 import uvicorn
 from pydantic import BaseModel
 from stable_baselines3 import PPO, A2C, TD3, SAC, DQN
+from wonderwords import RandomWord
+import random
 
 app = fastapi.FastAPI()
+
+db = dict()
+
+
+def create_model_name():
+    r = RandomWord()
+    return f"{r.word(word_max_length=5)}-{r.word(word_max_length=5)}-{r.word(word_max_length=5)}-{random.randrange(100,999)}"
+
+
+def create_model_item(name, policy, environment):
+    return_dict = dict()
+    return_dict["name"] = name
+    return_dict["policy"] = policy
+    return_dict["environment"] = environment
+    return return_dict
 
 
 def run_training(
     environment: str = None, policy: str = None, n_training_epochs: int = None
 ) -> dict:
     print(environment)
-    env = gym.make(environment, render_mode="rgb_array")
+    env = gym.make(environment)
 
     if policy.upper() == "PPO":
         model = PPO("MlpPolicy", env, verbose=1)
@@ -31,6 +48,13 @@ def run_training(
         raise NameError(f"Policy {policy} not yet implemented in roas.")
     model.learn(total_timesteps=n_training_epochs)
 
+    model_name = create_model_name()
+    print(model_name)
+
+    model_dict = create_model_item(
+        name=model_name, policy=policy, environment=environment
+    )
+
     vec_env = model.get_env()
     obs = vec_env.reset()
 
@@ -45,7 +69,10 @@ def run_training(
 
     print(f"mean reward: {np.mean(reward_list)}")
 
-    return {"mean_reward": float(np.mean(reward_list))}
+    return {
+        "model_dict": model_dict,
+        "log": {"mean_reward": float(np.mean(reward_list))},
+    }
 
 
 class Item(BaseModel):
@@ -67,6 +94,7 @@ async def api_dev_run(item: Item):
         policy=item.policy,
         n_training_epochs=int(item.n_training_epochs),
     )
+    db[res["model_dict"]["name"]] = res["model_dict"]
     return res
 
 
